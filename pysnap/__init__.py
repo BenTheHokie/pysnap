@@ -5,7 +5,7 @@ import os.path
 from time import time
 
 from pysnap.utils import (encrypt, decrypt, decrypt_story,
-                          make_media_id, request)
+                          make_media_id, request, stor_rq)
 
 MEDIA_IMAGE = 0
 MEDIA_VIDEO = 1
@@ -102,6 +102,7 @@ class Snapchat(object):
         result = r.json()
         if 'auth_token' in result:
             self.auth_token = result['auth_token']
+	    print self.auth_token
         if 'username' in result:
             self.username = username
         return result
@@ -174,9 +175,11 @@ class Snapchat(object):
         :param story_key: Encryption key of the story
         :param story_iv: Enctyprion IV of the story
         """
-        r = self._request('story_blob', {'story_id': story_id},
-                          raise_for_status=False, req_type='get')
-        data = decrypt_story(r.content, story_key, story_iv)
+
+
+        r = stor_rq(story_id)
+
+        data = decrypt_story(r.content, story_key.decode('base64'), story_iv.decode('base64'))
         if any((is_image(data), is_video(data), is_zip(data))):
             return data
         return None

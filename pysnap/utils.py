@@ -55,6 +55,12 @@ def encrypt(data):
 def timestamp():
     return int(round(time() * 1000))
 
+def stor_rq(media_id):
+    headers = {'User-Agent': 'Snapchat/6.1.2 (iPhone5; iOS 6.1.4; gzip)'}
+    url = URL+'story_blob?story_id='+media_id
+
+    r = requests.get(url, headers=headers)
+    return r
 
 def request(endpoint, auth_token, data=None, files=None,
             raise_for_status=True, req_type='post'):
@@ -74,7 +80,7 @@ def request(endpoint, auth_token, data=None, files=None,
         'req_token': make_request_token(auth_token or STATIC_TOKEN,
                                         str(now))
     })
-    headers = {'User-Agent': 'Snapchat/6.1.2 (iPhone6,2; iOS 7.0.4; gzip)'}
+    headers = {'User-Agent': 'Snapchat/6.1.2 (iPhone5; iOS 6.1.4; gzip)'}
     if req_type == 'post':
         r = requests.post(URL + endpoint, data=data, files=files,
                           headers=headers)
