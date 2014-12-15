@@ -13,6 +13,7 @@ import requests
 from Crypto.Cipher import AES
 
 URL = 'https://feelinsonice-hrd.appspot.com/bq/'
+UA = 'Snapchat/6.1.2 (iPhone5; iOS 6.1.4; gzip)'
 
 SECRET = b'iEk21fuwZApXlz93750dmW22pw389dPwOk'
 STATIC_TOKEN = 'm198sOkJEn37DjqZ32lpRu76xmw288xSQ9'
@@ -56,7 +57,7 @@ def timestamp():
     return int(round(time() * 1000))
 
 def stor_rq(media_id):
-    headers = {'User-Agent': 'Snapchat/6.1.2 (iPhone5; iOS 6.1.4; gzip)'}
+    headers = {'User-Agent': UA}
     url = URL+'story_blob?story_id='+media_id
 
     r = requests.get(url, headers=headers)
@@ -80,7 +81,7 @@ def request(endpoint, auth_token, data=None, files=None,
         'req_token': make_request_token(auth_token or STATIC_TOKEN,
                                         str(now))
     })
-    headers = {'User-Agent': 'Snapchat/6.1.2 (iPhone5; iOS 6.1.4; gzip)'}
+    headers = {'User-Agent': UA}
     if req_type == 'post':
         r = requests.post(URL + endpoint, data=data, files=files,
                           headers=headers)
