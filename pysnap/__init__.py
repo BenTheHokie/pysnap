@@ -173,7 +173,7 @@ class Snapchat(object):
 
         :param story_id: Media id to fetch
         :param story_key: Encryption key of the story
-        :param story_iv: Enctyprion IV of the story
+        :param story_iv: Encryption IV of the story
         """
 
 
