@@ -102,7 +102,6 @@ class Snapchat(object):
         result = r.json()
         if 'auth_token' in result:
             self.auth_token = result['auth_token']
-	    print self.auth_token
         if 'username' in result:
             self.username = username
         return result
