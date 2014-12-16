@@ -78,9 +78,9 @@ class Snapchat(object):
         self.auth_token = None
 
     def _request(self, endpoint, data=None, files=None,
-                 raise_for_status=True, req_type='post'):
+                 raise_for_status=True, req_type='post', authtsdata = True):
         return request(endpoint, self.auth_token, data, files,
-                       raise_for_status, req_type)
+                       raise_for_status, req_type, authtsdata)
 
     def _unset_auth(self):
         self.username = None
@@ -175,8 +175,10 @@ class Snapchat(object):
         :param story_iv: Enctyprion IV of the story
         """
         r = self._request('story_blob', {'story_id': story_id},
-                          raise_for_status=False, req_type='get')
-        data = decrypt_story(r.content, story_key, story_iv)
+                          raise_for_status=False, req_type='get',
+			  authtsdata = False)
+	print r.url
+        data = decrypt_story(r.content, story_key.decode('base64'), story_iv.decode('base64'))
         if any((is_image(data), is_video(data), is_zip(data))):
             return data
         return None

@@ -57,7 +57,7 @@ def timestamp():
 
 
 def request(endpoint, auth_token, data=None, files=None,
-            raise_for_status=True, req_type='post'):
+            raise_for_status=True, req_type='post', authtsdata = False):
     """Wrapper method for calling Snapchat API which adds the required auth
     token before sending the request.
 
@@ -69,11 +69,12 @@ def request(endpoint, auth_token, data=None, files=None,
     now = timestamp()
     if data is None:
         data = {}
-    data.update({
-        'timestamp': now,
-        'req_token': make_request_token(auth_token or STATIC_TOKEN,
+    if authtsdata:
+	data.update({
+	    'timestamp': now,
+	    'req_token': make_request_token(auth_token or STATIC_TOKEN,
                                         str(now))
-    })
+	})
     headers = {'User-Agent': 'Snapchat/6.1.2 (iPhone6,2; iOS 7.0.4; gzip)'}
     if req_type == 'post':
         r = requests.post(URL + endpoint, data=data, files=files,
