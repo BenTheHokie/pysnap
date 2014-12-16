@@ -57,7 +57,7 @@ def timestamp():
 
 
 def request(endpoint, auth_token, data=None, files=None,
-            raise_for_status=True, req_type='post', authtsdata = False):
+            raise_for_status=True, req_type='post', authtsdata = True):
     """Wrapper method for calling Snapchat API which adds the required auth
     token before sending the request.
 
@@ -65,6 +65,7 @@ def request(endpoint, auth_token, data=None, files=None,
     :param data: Dictionary containing form data
     :param raise_for_status: Raise exception for 4xx and 5xx status codes
     :param req_type: The request type (GET, POST). Defaults to POST
+    :param authtsdata: Whether to attach the timestamp and auth token. Defaults to True
     """
     now = timestamp()
     if data is None:

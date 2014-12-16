@@ -172,12 +172,11 @@ class Snapchat(object):
 
         :param story_id: Media id to fetch
         :param story_key: Encryption key of the story
-        :param story_iv: Enctyprion IV of the story
+        :param story_iv: Encryption IV of the story
         """
         r = self._request('story_blob', {'story_id': story_id},
                           raise_for_status=False, req_type='get',
 			  authtsdata = False)
-	print r.url
         data = decrypt_story(r.content, story_key.decode('base64'), story_iv.decode('base64'))
         if any((is_image(data), is_video(data), is_zip(data))):
             return data
